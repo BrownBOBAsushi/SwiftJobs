@@ -1,0 +1,4 @@
+# Shadcn UI components will be installed here
+# Run: npx shadcn-ui@latest init
+# Then add components as needed: npx shadcn-ui@latest add button card input etc.
+
