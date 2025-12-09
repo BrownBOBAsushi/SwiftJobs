@@ -93,3 +93,9 @@ async def start_negotiation(data: NegotiationRequest):
 @app.get("/")
 def home():
     return {"status": "Agentic Negotiation System Online"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    # This makes the script runnable directly with "python main.py"
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
