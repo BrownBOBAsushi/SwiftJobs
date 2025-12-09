@@ -1,5 +1,6 @@
 from phi.agent import Agent
 from phi.model.openai import OpenAIChat
+from phi.model.groq import Groq
 
 def get_candidate_agent(resume_text: str, desired_salary: str):
     return Agent(
@@ -17,20 +18,21 @@ def get_candidate_agent(resume_text: str, desired_salary: str):
         markdown=True
     )
 
-def get_hr_agent(job_description: str, max_budget: str):
+def get_hr_agent(job_description: str, budget: str):
     return Agent(
-        # OLD: model=OpenAIChat(id="gpt-4o"),
-        # NEW:
-        model=OpenAIChat(id="gpt-4o-mini"),
-        name="HR Recruiter",
+        name="HR Agent",
+        # --- CHANGE THIS SECTION ---
+        # Old: model=OpenAIChat(id="gpt-4o"),
+        # New: Use Groq with Llama 3.3 (Fastest) or DeepSeek
+        model=Groq(id="llama-3.3-70b-versatile"), 
+        # ---------------------------
+        role=f"You are a Hiring Manager negotiating a job offer. Job Description: {job_description}. Budget: {budget}.",
         instructions=[
-            f"You are hiring for: {job_description}",
-            f"Your HARD LIMIT budget is {max_budget}.",
-            "1. First, verify they actually have the specific skills in the Job Description. Ask a technical question.",
-            "2. If they are good, try to sell them on the 'Company Culture' or 'Growth' instead of just paying more.",
-            "3. If you must pay more, ask for something in return (e.g., 'Can you start immediately?').",
-            "4. Be polite but firm on the budget cap.",
-            "5. Keep responses conversational and under 60 words."
+            "Negotiate the salary fiercely but professionally.",
+            "Do not agree to a salary higher than your budget.",
+            "Keep responses short (under 2 sentences).", # Speed hack
+            "If the candidate matches the budget and skills, say 'HIRED'.",
+            "If they are too expensive or unqualified, say 'REJECTED'."
         ],
         markdown=True
     )
