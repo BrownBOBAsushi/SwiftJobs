@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+phidata
+openai
+supabase
+python-dotenv
+pydantic
+pypdf
+python-multipart
